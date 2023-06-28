@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EL JUEGO DE LA MEMORA</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h1 style="margin: 15px;">El juego de la memoria</h1>
+  <h3 style="margin: 15px;">Total de imagenes seleccionadas: 0</h3>
+
+  <button type="button" class="btn btn-success" style="margin-left: 15px;">Agregar imágenes</button>
+
+  <!--
+  <button id="agregarimagenes" class="btn btn-primary">
+      <input type="file" id="filechooser">Agregar imagenes</button>
+  <div id="imagenes" style="margin: 15px;"></div>
+  -->
+
+  <div id="tablero" style="margin: 15px;">
+    <div id="columnas" style="display: flex;">
+
+    </div>
+  </div>
+
+  <div id="stargame" style="margin: 15px; display: none;">
+    <button type="button" id="activarjuego" class="btn btn-success">Comenzar juego</button>
+  </div>
+  <!--
+  <div id="Randomize" style="margin: 15px;display: none;">
+
+  </div>
+  <div id="Ayuda" style="margin: 15px;display: none;">
+
+  </div>
+  -->
+  <p>Ingrese el total: </p>
+  <input id="cantidadDeFotos" name="personajes">
+  <button type="button" id="prueba" class="btn btn-success">Probar</button>
+
+  <button type="button" class="btn btn-primary" style="padding: 0; margin: 5px;">
+    <div style="display: flex;">
+      <div style="position: relative; margin: 5px;">
+        <img th:src="@{/abra.png}" style="height: 100px; width: 100px;">
+      </div>
+      <div style="height: 100px; width: 100px;margin: 5px; background: cornflowerblue; position: absolute" ></div>
+    </div>
+  </button>
+
+
+  <div id="holaaa">
+
+  </div>
+
+</div>
+
+<script>
+
+  $(document).ready(function () {
+
+    $("#prueba").click(function (){
+      var cantidadDeFotos = $("#cantidadDeFotos").val();
+      var columnas;
+      var filas;
+      var divfilas = $(".filas");
+
+      for(var i=1;i<=cantidadDeFotos;i++){
+        var cociente = cantidadDeFotos/i;
+        if((Math.abs(cociente-i)===1) || (cociente===i)){
+          if (i%2 === 1 ){
+            columnas = i;
+            filas = cociente;
+          }else if (cociente%2 === 1){
+            columnas = cociente;
+            filas = i;
+          }
+          $("#stargame").css('display','block');
+          break;
+        }else if (i===cantidadDeFotos-1){
+          columnas=0;
+          filas=0;
+          break;
+        }
+      }
+
+      var contador  = 0;
+      for (var k=0;k<columnas;k++){
+        $("#columnas").append('<div class="filas" style="display: flex;flex-direction: column;">\n' +
+                '\n' +
+                '            </div>');
+      }
+
+      for (var j=0;j<filas;j++){
+        contador += 1;
+        $(".filas").append('' +
+                '<button type="button" class="btn btn-primary" id="div' + contador + '" style="padding: 0; margin: 5px;">\n' +
+                '        <div style="display: flex;">\n' +
+                '            <div style="position: relative; margin: 5px;">\n' +
+                '                <img src="/abra.png" style="height: 100px; width: 100px;">\n' +
+                '            </div>\n' +
+                '            <div style="height: 100px; width: 100px;margin: 5px; background: cornflowerblue; position: absolute;display: block" ' +
+                'id="cuadrito' + contador + '"></div>\n' +
+                '        </div>\n' +
+                '    </button>' +
+                '');
+      }
+
+      for (var o=0;o<cantidadDeFotos;o++){
+        $("#div"+o).click(function (){
+          $("#cuadrito"+o).css('display',"none");
+        });
+
+      }
+
+
+    });
+  });
+
+
+
+</script>
+</body>
+</html>
