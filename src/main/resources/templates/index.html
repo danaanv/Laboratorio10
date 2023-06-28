@@ -15,15 +15,18 @@ opper.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.
 min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<div class="container">
-    <h1>El juego de la memoria</h1>
-    <h3>Total de imagenes seleccionadas: 0</h3>
+<div class="container mt-3">
+    <h1  class="mt-3" style="font-weight: bold">El juego de la memoria</h1>
+    <h4 class="mt-3" id ="contadorpokemons" style="font-weight: bold">Total de imagenes seleccionadas: 0</h4>
 
-    <button id="agregar imagenes" class="btn btn-primary">
-        <input type="file" id="filechooser">Agregar imagenes</button>
-    <div id="imagenes"></div>
+
+    <label for="subir" class="btn mt-3"
+           style="background-color: green; color: white">Agregar Imagenes</label>
+    <input type="file" id="subir" accept="image/png" style="display: none">
+    <div class="row flex-box" id="imagenes"></div>
 
     <div id="tablero">
 
@@ -35,8 +38,63 @@ min.js"></script>
     <div id="Ayuda">
     </div>
 </div>
-
 <script>
+
+    $(document).ready(function (){
+        let principal = document.getElementById('imagenes');
+        let imagenasubir = document.getElementById('subir');
+        imagenasubir.addEventListener('change',(event)=>{
+            const file = event.target.files[0]
+            alert('Se ha subido la imagen: '+file.name);
+
+            var creaDivmenor = document.createElement("div");
+            creaDivmenor.classList.add('col-md-3','mt-3');
+
+            var divparaboton = document.createElement("div");
+            divparaboton.classList.add('container-fluid');
+            divparaboton.style.display = 'flex';
+            divparaboton.style.justifyContent='flex-end';
+            divparaboton.id= "divparaboton";
+
+            var imagenessubidas = $(".pokemonimagen");
+            var numerodepokemon = imagenessubidas.length;
+
+            var botonborrar = document.createElement("button");
+            botonborrar.style.backgroundColor='white';
+            botonborrar.textContent='X';
+            botonborrar.classList.add("botonborrar");
+
+            botonborrar.addEventListener('click',()=>{
+                alert(("BOTONN FUNCIONAAA"));
+            })
+
+            divparaboton.appendChild(botonborrar);
+
+            creaDivmenor.appendChild(divparaboton);
+
+            var imagenpuesta = document.createElement("img");
+            imagenpuesta.classList.add('img-fluid');
+            imagenpuesta.classList.add('pokemonimagen');
+            imagenpuesta.id = 'pokemon'+numerodepokemon+1;
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                imagenpuesta.src = e.target.result;
+            }
+
+            creaDivmenor.appendChild(imagenpuesta);
+            principal.appendChild(creaDivmenor);
+
+            var imagenessubidas = $(".pokemonimagen");
+            alert(imagenessubidas.length);
+
+            var contador =$("#contadorpokemons");
+            contador.text("Total de imagenes seleccionadas: "+imagenessubidas.length);
+
+        })
+
+    })
+
 
 </script>
 </body>
