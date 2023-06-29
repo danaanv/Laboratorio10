@@ -21,12 +21,13 @@ min.js"></script>
 <div class="container mt-3">
     <h1  class="mt-3" style="font-weight: bold">El juego de la memoria</h1>
     <h4 class="mt-3" id ="contadorpokemonsss" style="font-weight: bold">Total de imagenes seleccionadas: 0</h4>
-
+    <form id="formulario-imagen" enctype="multipart/form-data">
     <div class="container-fluid" id="divpalab">
         <label for="subir" class="btn mt-3 labfor"
                style="background-color: green; color: white">Agregar Imagenes</label>
-        <input type="file" id="subir" accept="image/png" style="display: none">
+        <input type="file" id="subir" name="upload" accept="image/png" style="display: none">
     </div>
+    </form>
     <div class="row flex-box" id="imagenes"></div>
     <div class="container" style="justify-content:center;justify-items: center;display: flex;">
         <button type="button" class="btn btn-success" id="comenzar">Comenzar Juego</button>
