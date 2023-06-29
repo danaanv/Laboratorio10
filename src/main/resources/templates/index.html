@@ -36,7 +36,7 @@ min.js"></script>
     <div id="tablero2">
         <div class="flex-box" id="tablero22">
 
-            <div class="filas" style="display: flex;">
+            <div class="container filas">
 
             </div>
         </div>
@@ -51,20 +51,64 @@ min.js"></script>
     </div>
 
 
-    <button type="button" class="btn btn-primary" style="padding: 0; margin: 5px;" id="botonprueba">
-        <div style="display: flex;">
-            <div style="position: relative; margin: 5px;">
-                <img src="/abra.png" style="height: 100px; width: 100px;">
-            </div>
-            <div style="height: 100px; width: 100px;margin: 5px; background: cornflowerblue; position: absolute;display: block" id="cuadroprueba"></div>
-        </div>
-    </button>
-
-
 </div>
 <script>
 
     $(document).ready(function (){
+        // Función para generar el código HTML de cada imagen
+        function generarHTMLImagen(ruta) {
+            return '<img src="' + ruta + '" style="height: 100px; width: 100px;">';
+        }
+
+        function generarHTMLImagen2(ruta){
+            var elementoimagen = document.createElement("img");
+            elementoimagen.style.height = '100px';
+            elementoimagen.style.width = '100px';
+            elementoimagen.src = ruta;
+            return elementoimagen;
+        }
+
+        function generarBoton(imagenHTML,index,iterador){
+            return '<button type="button" class="btn btn-primary boton_imagen_' + index + '"  id="imagen_' + index + 'boton_' + iterador + '" style="padding: 0; margin: 5px;">\n' +
+                '    <div style="display: flex;">\n' +
+                '      <div style="position: relative; margin: 5px;">\n' +
+                imagenHTML +
+                '      </div>\n' +
+                '      <div style="height: 100px; width: 100px;margin: 5px; background: cornflowerblue; position: absolute;display: block" ' +
+                'id="imagen_' + index + 'cuadro_' + iterador + '"></div>\n' +
+                '    </div>\n' +
+                '  </button>';
+        }
+
+        function generarBoton2(imagenHTML,index,iterador){
+            var elementoBoton = document.createElement("button");
+            elementoBoton.type = "button";
+            var classboton = "btn btn-primary boton_imagen_" + index + '"';
+            elementoBoton.classList.add('btn','btn-primary','boton_imagen_'+index);
+            elementoBoton.id = "imagen_"+index+"boton_"+iterador;
+            elementoBoton.style.padding = '0';
+            elementoBoton.style.margin = '0';
+            var minidiv1 = document.createElement("div");
+            minidiv1.style.position = 'relative';
+            minidiv1.style.margin ='5px';
+            var minidiv2  = document.createElement("div");
+            minidiv2.style.display = 'flex';
+            var minidiv3 = document.createElement("div");
+            minidiv3.style.height = '100px';
+            minidiv3.style.width = '100px';
+            minidiv3.style.margin = '5px';
+            minidiv3.style.background = 'cornflowerblue';
+            minidiv3.style.position = 'absolute';
+            minidiv3.style.display = 'block';
+            minidiv3.id = 'imagen_'+index+'cuadro_'+iterador;
+            minidiv1.appendChild(imagenHTML);
+            minidiv2.appendChild(minidiv1);
+            minidiv2.appendChild(minidiv3);
+            elementoBoton.appendChild(minidiv2);
+            return elementoBoton;
+
+        }
+
         var numerodePokemones = 0;
         var contadortotalimagenes = 0;
         let principal = document.getElementById('imagenes');
@@ -116,14 +160,12 @@ min.js"></script>
 
 
             botonborrar.addEventListener('click',()=>{
-                alert(("BOTONN FUNCIONAAA"+botonborrar.id));
                $(creaDivmenor).remove();
                 numerodePokemones--;
                 contadorhtml.textContent ="Total de imágenes seleccionadas: "+numerodePokemones;
                 if(numerodePokemones<limite){
                     var labb = document.querySelector(".labfor");
                     if (labb){
-                        alert("GMDAMWDOASOD");
                     }
                     else {
                         $(divforlab).prepend('<label for="subir" class="btn mt-3 labfor" style="background-color: green; color: white">Agregar Imagenes</label>');
@@ -142,7 +184,6 @@ min.js"></script>
             else{
                 var labb = document.querySelector(".labfor");
                 if (labb){
-                    alert("SIIIII");
                 }
                 else {
                     divforlab.prepend('<label for="subir" class="btn mt-3 labfor" style="background-color: green; color: white">Agregar Imagenes</label>')
@@ -159,10 +200,11 @@ min.js"></script>
             }else {
                 alert("La cantidad de imagenes subidas es: "+listaimagenes.length);
             }
-            var cantidadDeFotos = listaimagenes.length;
-            alert("Cantidad de fotos: "+cantidadDeFotos);
+            var cantidadDeFotos = 2*(listaimagenes.length);
+            //alert("Cantidad de fotos: "+cantidadDeFotos);
             var columnas;
             var filas;
+            var tabien = 0;
             var divfilas = $(".filas");
             for(var i=1;i<=cantidadDeFotos;i++){
                 var cociente = cantidadDeFotos/i;
@@ -177,96 +219,67 @@ min.js"></script>
                         columnas = i;
                         filas = i;
                     }
-                    alert("columnas: "+columnas+", filas: "+filas);
-                    break;
-                }else if (i===cantidadDeFotos-1){
-                    alert("Else if: columnas: "+columnas+", filas: "+filas);
-                    columnas=0;
-                    filas=0;
-                    break;
-                }
-            }
-
-        })
-
-
-
-
-        $("#pruebad").click(function (){
-            var cantidadDeFotos = $("#cantidadDeFotos").val();
-            var columnas;
-            var filas;
-            var divfilas = $(".filas");
-
-            for(var i=1;i<=cantidadDeFotos;i++){
-                var cociente = cantidadDeFotos/i;
-                if((Math.abs(cociente-i)===1) || (cociente===i)){
-                    if (i%2 === 1 ){
-                        columnas = i;
-                        filas = cociente;
-                    }else if (cociente%2 === 1){
-                        columnas = cociente;
-                        filas = i;
-                    }
-                    $("#stargame").css('display','block');
+                    tabien = 1;
+                    //alert("columnas: "+columnas+", filas: "+filas);
                     break;
                 }else if (i===cantidadDeFotos-1){
                     columnas=0;
                     filas=0;
+                    //alert("Else if: columnas: "+columnas+", filas: "+filas);
                     break;
                 }
             }
-        });
+            if(tabien===1){
+                // Recorrer el array de imágenes y agregar los elementos al contenedor deseado
+                var contener = document.querySelector(".filas"); // Reemplaza ".filas" con el selector de tu contenedor
+                console.log("Columnas: "+ columnas+ ", Filas: ",filas );
+                //$.each(listaimagenes, function(index, imagen) {
+                    //for(var iterador=0;iterador<2;iterador++){
+                        for (var row=1; row<=filas;row++){
+                            var minirow = document.createElement("div");
+                            minirow.classList.add("row","mt-3");
+                            for(var column =1; column<=columnas;column++){
+                                var index = columnas*(row-1)+column;
+                                var col = document.createElement("div");
+                                col.classList.add("col-md-4","mt-3");
+                                console.log("index"+index);
+                                //console.log(listaimagenes[index-1]);
+                                var j = index-1;
+                                if (j>=listaimagenes.length){
+                                    j =j-listaimagenes.length;
 
-        var imagenes = [
-            "static/Abra.png",
-            "static/Aerodactyl.png",
-            "static/arbok.png",
-            "static/Arcanine.png",
-            "static/Beedrill.png",
-            "static/Charizard.png"
-        ];
+                                }
+                                console.log("J: "+j);
+                                var imagenHTML = generarHTMLImagen2(listaimagenes[j].src);
+                                var botonHTML = generarBoton2(imagenHTML,j,'it'+row+column);
+                                col.appendChild(botonHTML);
+                                minirow.appendChild(col);
 
-        var cantidadElementos = imagenes.length;
+                            }
+                            contener.appendChild(minirow);
+                        }
+                        for (var k = 0;k<=listaimagenes.length;k++){
+                            $(".boton_imagen_"+k).each(function() {
+                                console.log("Entro boton"+j);
+                                var buttonId = $(this).attr("id");
+                                var divId = buttonId.replace("boton", "cuadro");
+                                console.log("ID del botón: " + buttonId);
+                                console.log("ID del div dentro del botón: " + divId);
 
-        // Función para generar el código HTML de cada imagen
-        function generarHTMLImagen(ruta) {
-            return '<img src="' + ruta + '" style="height: 100px; width: 100px;">';
-        }
+                                $("#"+buttonId).click(function (){
+                                    $("#"+divId).toggle();
+                                });
+                            });
+                        }
 
-        function generarBoton(imagenHTML,index,iterador){
-            return '<button type="button" class="btn btn-primary boton_imagen_' + index + '"  id="imagen_' + index + 'boton_' + iterador + '" style="padding: 0; margin: 5px;">\n' +
-                '    <div style="display: flex;">\n' +
-                '      <div style="position: relative; margin: 5px;">\n' +
-                imagenHTML +
-                '      </div>\n' +
-                '      <div style="height: 100px; width: 100px;margin: 5px; background: cornflowerblue; position: absolute;display: block" ' +
-                'id="imagen_' + index + 'cuadro_' + iterador + '"></div>\n' +
-                '    </div>\n' +
-                '  </button>';
-        }
 
-        // Recorrer el array de imágenes y agregar los elementos al contenedor deseado
-        var $contenedor = $(".filas"); // Reemplaza ".filas" con el selector de tu contenedor
-        $.each(imagenes, function(index, imagen) {
-            for(var iterador=0;iterador<2;iterador++){
-                var imagenHTML = generarHTMLImagen(imagen);
-                var botonHTML = generarBoton(imagenHTML,index,iterador);
-                $contenedor.append(botonHTML);
+                    //}
+                //});
 
-                $(".boton_imagen_"+index).each(function() {
-                    var buttonId = $(this).attr("id");
-                    var divId = buttonId.replace("boton", "cuadro");
-
-                    console.log("ID del botón: " + buttonId);
-                    console.log("ID del div dentro del botón: " + divId);
-
-                    $("#"+buttonId).click(function (){
-                        $("#"+divId).toggle();
-                    });
-                });
             }
+
         });
+
     });
 
 
