@@ -20,10 +20,10 @@ min.js"></script>
 <body>
 <div class="container mt-3">
     <h1  class="mt-3" style="font-weight: bold">El juego de la memoria</h1>
-    <h4 class="mt-3" id ="contadorpokemons" style="font-weight: bold">Total de imagenes seleccionadas: 0</h4>
+    <h4 class="mt-3" id ="contadorpokemonsss" style="font-weight: bold">Total de imagenes seleccionadas: 0</h4>
 
 
-    <label for="subir" class="btn mt-3"
+    <label for="subir" class="btn mt-3 labfor"
            style="background-color: green; color: white">Agregar Imagenes</label>
     <input type="file" id="subir" accept="image/png" style="display: none">
     <div class="row flex-box" id="imagenes"></div>
@@ -45,9 +45,9 @@ min.js"></script>
         var contadortotalimagenes = 0;
         let principal = document.getElementById('imagenes');
         let imagenasubir = document.getElementById('subir');
+        let labeldelinput = $(".labfor");
         imagenasubir.addEventListener('change',(event)=>{
             const file = event.target.files[0]
-            alert('Se ha subido la imagen: '+file.name);
 
             var creaDivmenor = document.createElement("div");
             creaDivmenor.classList.add('col-md-3','mt-3');
@@ -81,6 +81,9 @@ min.js"></script>
             numerodePokemones++;
             contadortotalimagenes++;
 
+            var contadorhtml = document.getElementById("contadorpokemonsss");
+            contadorhtml.textContent = "Total de imágenes selecciondas: " +numerodePokemones;
+
 
             creaDivmenor.appendChild(imagenpuesta);
             principal.appendChild(creaDivmenor);
@@ -89,7 +92,18 @@ min.js"></script>
                 alert(("BOTONN FUNCIONAAA"+botonborrar.id));
                $(creaDivmenor).remove();
                 numerodePokemones--;
+                contadorhtml.textContent ="Total de imágenes seleccionadas: "+numerodePokemones;
             })
+
+            if(numerodePokemones===15){
+                imagenasubir.hidden =true;
+                labeldelinput.hidden = true;
+                alert("Se ha excedido el nombre de imagen");
+            }
+            else{
+                imagenasubir.hidden = false;
+                labeldelinput.hidden = false;
+            }
 
         })
 
