@@ -36,7 +36,7 @@ min.js"></script>
     <div id="tablero2">
         <div class="flex-box" id="tablero22">
 
-            <div class="filas" style="display: flex;">
+            <div class="container filas">
 
             </div>
         </div>
@@ -60,6 +60,14 @@ min.js"></script>
             return '<img src="' + ruta + '" style="height: 100px; width: 100px;">';
         }
 
+        function generarHTMLImagen2(ruta){
+            var elementoimagen = document.createElement("img");
+            elementoimagen.style.height = '100px';
+            elementoimagen.style.width = '100px';
+            elementoimagen.src = ruta;
+            return elementoimagen;
+        }
+
         function generarBoton(imagenHTML,index,iterador){
             return '<button type="button" class="btn btn-primary boton_imagen_' + index + '"  id="imagen_' + index + 'boton_' + iterador + '" style="padding: 0; margin: 5px;">\n' +
                 '    <div style="display: flex;">\n' +
@@ -71,6 +79,36 @@ min.js"></script>
                 '    </div>\n' +
                 '  </button>';
         }
+
+        function generarBoton2(imagenHTML,index,iterador){
+            var elementoBoton = document.createElement("button");
+            elementoBoton.type = "button";
+            var classboton = "btn btn-primary boton_imagen_" + index + '"';
+            elementoBoton.classList.add('btn','btn-primary','boton_imagen_'+index);
+            elementoBoton.id = "imagen_"+index+"boton_"+iterador;
+            elementoBoton.style.padding = '0';
+            elementoBoton.style.margin = '0';
+            var minidiv1 = document.createElement("div");
+            minidiv1.style.position = 'relative';
+            minidiv1.style.margin ='5px';
+            var minidiv2  = document.createElement("div");
+            minidiv2.style.display = 'flex';
+            var minidiv3 = document.createElement("div");
+            minidiv3.style.height = '100px';
+            minidiv3.style.width = '100px';
+            minidiv3.style.margin = '5px';
+            minidiv3.style.background = 'cornflowerblue';
+            minidiv3.style.position = 'absolute';
+            minidiv3.style.display = 'block';
+            minidiv3.id = 'imagen_'+index+'cuadro_'+iterador;
+            minidiv1.appendChild(imagenHTML);
+            minidiv2.appendChild(minidiv1);
+            minidiv2.appendChild(minidiv3);
+            elementoBoton.appendChild(minidiv2);
+            return elementoBoton;
+
+        }
+
         var numerodePokemones = 0;
         var contadortotalimagenes = 0;
         let principal = document.getElementById('imagenes');
@@ -162,7 +200,7 @@ min.js"></script>
             }else {
                 alert("La cantidad de imagenes subidas es: "+listaimagenes.length);
             }
-            var cantidadDeFotos = listaimagenes.length;
+            var cantidadDeFotos = 2*(listaimagenes.length);
             //alert("Cantidad de fotos: "+cantidadDeFotos);
             var columnas;
             var filas;
@@ -193,30 +231,47 @@ min.js"></script>
             }
             if(tabien===1){
                 // Recorrer el array de imágenes y agregar los elementos al contenedor deseado
-                var $contenedor = $(".filas"); // Reemplaza ".filas" con el selector de tu contenedor
-                $.each(listaimagenes, function(index, imagen) {
-                    for(var iterador=0;iterador<2;iterador++){
-                        var imagenHTML = generarHTMLImagen(imagen.src);
-                        var botonHTML = generarBoton(imagenHTML,index,iterador);
-                        $contenedor.append(botonHTML);
+                var contener = document.querySelector(".filas"); // Reemplaza ".filas" con el selector de tu contenedor
+                console.log("Columnas: "+ columnas+ ", Filas: ",filas );
+                //$.each(listaimagenes, function(index, imagen) {
+                    //for(var iterador=0;iterador<2;iterador++){
+                        for (var row=1; row<=filas;row++){
+                            var minirow = document.createElement("div");
+                            minirow.classList.add("row","mt-3");
+                            for(var column =1; column<=columnas;column++){
+                                var index = columnas*(row-1)+column;
+                                var col = document.createElement("div");
+                                col.classList.add("col-md-4","mt-3");
+                                console.log("index"+index);
+                                //console.log(listaimagenes[index-1]);
+                                var j = index-1;
+                                if (j>=listaimagenes.length){
+                                    j =j-listaimagenes.length;
 
-                        $(".boton_imagen_"+index).each(function() {
-                            var buttonId = $(this).attr("id");
-                            var divId = buttonId.replace("boton", "cuadro");
+                                }
+                                console.log("J: "+j);
+                                var imagenHTML = generarHTMLImagen2(listaimagenes[j].src);
+                                var botonHTML = generarBoton2(imagenHTML,index,'it'+row+column);
+                                col.appendChild(botonHTML);
+                                $(".boton_imagen_"+index).each(function() {
+                                    var buttonId = $(this).attr("id");
+                                    var divId = buttonId.replace("boton", "cuadro");
 
-                            console.log("ID del botón: " + buttonId);
-                            console.log("ID del div dentro del botón: " + divId);
+                                    //console.log("ID del botón: " + buttonId);
+                                    //console.log("ID del div dentro del botón: " + divId);
 
-                            $("#"+buttonId).click(function (){
-                                $("#"+divId).toggle();
-                            });
+                                    $("#"+buttonId).click(function (){
+                                        $("#"+divId).toggle();
+                                    });
+                                });
+                                minirow.appendChild(col);
+                            }
+                            contener.appendChild(minirow);
+                        }
 
 
-
-                        });
-
-                    }
-                });
+                    //}
+                //});
 
             }
 
