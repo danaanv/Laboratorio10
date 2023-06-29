@@ -58,10 +58,13 @@ min.js"></script>
     $(document).ready(function (){
 
         function numeroAleatorio(max, lista){
-
-            if(lista.includes(numero)){
-                function
+            var numeroaleatorio = getRandomInt(max);
+            if(lista.includes(numeroaleatorio)){
+                numeroAleatorio(numeroaleatorio,lista);
+            }else {
+                return numeroaleatorio;
             }
+
         }
 
         function getRandomInt(max){
@@ -262,15 +265,9 @@ min.js"></script>
                                     j =j-listaimagenes.length;
 
                                 }
-                                var numeroaleatorio = getRandomInt(cantidadDeFotos);
-                                console.log(numeroaleatorio);
-                                imagenespuestas.push(numeroaleatorio);
-                                if(imagenespuestas.includes(numeroaleatorio)){
-
-                                }else {
-
-                                }
-                                j = numeroaleatorio;
+                                var numerorandom = numeroAleatorio(max, lista);
+                                imagenespuestas.push(numerorandom);
+                                j = numerorandom;
                                 console.log("J: "+j);
                                 var imagenHTML = generarHTMLImagen2(listaimagenes[j].src);
                                 var botonHTML = generarBoton2(imagenHTML,j,'it'+row+column);
