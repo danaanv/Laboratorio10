@@ -41,6 +41,8 @@ min.js"></script>
 <script>
 
     $(document).ready(function (){
+        var numerodePokemones = 0;
+        var contadortotalimagenes = 0;
         let principal = document.getElementById('imagenes');
         let imagenasubir = document.getElementById('subir');
         imagenasubir.addEventListener('change',(event)=>{
@@ -49,6 +51,7 @@ min.js"></script>
 
             var creaDivmenor = document.createElement("div");
             creaDivmenor.classList.add('col-md-3','mt-3');
+            creaDivmenor.id = contadortotalimagenes+1;
 
             var divparaboton = document.createElement("div");
             divparaboton.classList.add('container-fluid');
@@ -56,17 +59,11 @@ min.js"></script>
             divparaboton.style.justifyContent='flex-end';
             divparaboton.id= "divparaboton";
 
-            var imagenessubidas = $(".pokemonimagen");
-            var numerodepokemon = imagenessubidas.length;
-
             var botonborrar = document.createElement("button");
             botonborrar.style.backgroundColor='white';
             botonborrar.textContent='X';
+            botonborrar.id= contadortotalimagenes+1;
             botonborrar.classList.add("botonborrar");
-
-            botonborrar.addEventListener('click',()=>{
-                alert(("BOTONN FUNCIONAAA"));
-            })
 
             divparaboton.appendChild(botonborrar);
 
@@ -75,21 +72,24 @@ min.js"></script>
             var imagenpuesta = document.createElement("img");
             imagenpuesta.classList.add('img-fluid');
             imagenpuesta.classList.add('pokemonimagen');
-            imagenpuesta.id = 'pokemon'+numerodepokemon+1;
+            imagenpuesta.id = 'pokemon'+contadortotalimagenes+1;
             var reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function(e) {
                 imagenpuesta.src = e.target.result;
             }
+            numerodePokemones++;
+            contadortotalimagenes++;
+
 
             creaDivmenor.appendChild(imagenpuesta);
             principal.appendChild(creaDivmenor);
 
-            var imagenessubidas = $(".pokemonimagen");
-            alert(imagenessubidas.length);
-
-            var contador =$("#contadorpokemons");
-            contador.text("Total de imagenes seleccionadas: "+imagenessubidas.length);
+            botonborrar.addEventListener('click',()=>{
+                alert(("BOTONN FUNCIONAAA"+botonborrar.id));
+               $(creaDivmenor).remove();
+                numerodePokemones--;
+            })
 
         })
 
