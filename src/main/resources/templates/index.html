@@ -282,14 +282,17 @@ min.js"></script>
                                     console.log("Array"+imagenespuestas);
                                 }
                                 var numerorandom = numeroAleatorio(listaimagenes.length, imagenespuestas);
+                                console.log("Numero pa imagen: "+numerorandom);
+                                console.log("NUMERO HARDOCRADEA: "+numeroimagen);
                                 imagenespuestas.push(numerorandom);
-                                console.log("Numero pa imagen"+numerorandom);
+
                                 //var j = numerorandom;
                                 console.log("J: "+j);
                                 //console.log(numeroimagen);
-                                var imagenHTML = generarHTMLImagen2(listaimagenes[j].src);
-                                //var imagenHTML = generarHTMLImagen2(listaimagenes[numeroimagen].src);
-                                var botonHTML = generarBoton2(imagenHTML,j,'it'+row+column);
+                                //var imagenHTML = generarHTMLImagen2(listaimagenes[j].src);
+                                var imagenHTML = generarHTMLImagen2(listaimagenes[numeroimagen].src);
+                                //var botonHTML = generarBoton2(imagenHTML,j,'it'+row+column);
+                                var botonHTML = generarBoton2(imagenHTML,numeroimagen,'it'+row+column);
                                 col.appendChild(botonHTML);
                                 minirow.appendChild(col);
                                 $("#ayuda").click(function (){
