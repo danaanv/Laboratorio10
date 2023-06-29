@@ -21,12 +21,13 @@ min.js"></script>
 <div class="container mt-3">
     <h1  class="mt-3" style="font-weight: bold">El juego de la memoria</h1>
     <h4 class="mt-3" id ="contadorpokemonsss" style="font-weight: bold">Total de imagenes seleccionadas: 0</h4>
-
+    <form id="formulario-imagen" enctype="multipart/form-data">
     <div class="container-fluid" id="divpalab">
         <label for="subir" class="btn mt-3 labfor"
                style="background-color: green; color: white">Agregar Imagenes</label>
-        <input type="file" id="subir" accept="image/png" style="display: none">
+        <input type="file" id="subir" name="upload" accept="image/png" style="display: none">
     </div>
+    </form>
     <div class="row flex-box" id="imagenes"></div>
     <div class="container" style="justify-content:center;justify-items: center;display: flex;">
         <button type="button" class="btn btn-success" id="comenzar">Comenzar Juego</button>
@@ -55,6 +56,29 @@ min.js"></script>
 <script>
 
     $(document).ready(function (){
+
+        var numerosalio;
+        var numeroimagen;
+        function numeroAleatorio(max, lista){
+            var numeroaleatorio = getRandomInt(max);
+            if (numeroaleatorio===numerosalio){
+                numeroAleatorio(max,lista);
+            }else {
+                numerosalio = numeroaleatorio;
+                if(lista.includes(numeroaleatorio)){
+                    numeroAleatorio(numeroaleatorio,lista);
+                }else {
+                    console.log("NUMERROOO ALEATORIOO: "+numeroaleatorio);
+                    console.log("NUMEROOO SALIO: "+numerosalio);
+                    numeroimagen = numeroaleatorio;
+                    return numeroaleatorio;
+                }
+            }
+        }
+
+        function getRandomInt(max){
+            return Math.floor(Math.random()*max);
+        }
         // Función para generar el código HTML de cada imagen
         function generarHTMLImagen(ruta) {
             return '<img src="' + ruta + '" style="height: 100px; width: 100px;">';
@@ -198,14 +222,14 @@ min.js"></script>
             if(listaimagenes.length===0){
                 alert("No se ha subido ninguna imagen");
             }else {
-                alert("La cantidad de imagenes subidas es: "+listaimagenes.length);
+                //alert("La cantidad de imagenes subidas es: "+listaimagenes.length);
             }
             var cantidadDeFotos = 2*(listaimagenes.length);
             //alert("Cantidad de fotos: "+cantidadDeFotos);
             var columnas;
             var filas;
             var tabien = 0;
-            var divfilas = $(".filas");
+            $('.filas').empty();
             for(var i=1;i<=cantidadDeFotos;i++){
                 var cociente = cantidadDeFotos/i;
                 if((Math.abs(cociente-i)===1) || (cociente===i)){
@@ -233,6 +257,7 @@ min.js"></script>
                 // Recorrer el array de imágenes y agregar los elementos al contenedor deseado
                 var contener = document.querySelector(".filas"); // Reemplaza ".filas" con el selector de tu contenedor
                 console.log("Columnas: "+ columnas+ ", Filas: ",filas );
+                var imagenespuestas = [];
                 //$.each(listaimagenes, function(index, imagen) {
                     //for(var iterador=0;iterador<2;iterador++){
                         for (var row=1; row<=filas;row++){
@@ -244,13 +269,22 @@ min.js"></script>
                                 col.classList.add("col-md-4","mt-3");
                                 console.log("index"+index);
                                 //console.log(listaimagenes[index-1]);
-                                var j = index-1;
+                                //var j = index-1;
                                 if (j>=listaimagenes.length){
                                     j =j-listaimagenes.length;
 
                                 }
+                                if(imagenespuestas.length===listaimagenes.length){
+                                    imagenespuestas=[];
+                                    console.log("Array"+imagenespuestas);
+                                }
+                                var numerorandom = numeroAleatorio(listaimagenes.length, imagenespuestas);
+                                imagenespuestas.push(numerorandom);
+                                console.log("Numero pa imagen"+numerorandom);
+                                var j = numerorandom;
                                 console.log("J: "+j);
-                                var imagenHTML = generarHTMLImagen2(listaimagenes[j].src);
+                                console.log(numeroimagen);
+                                var imagenHTML = generarHTMLImagen2(listaimagenes[numeroimagen].src);
                                 var botonHTML = generarBoton2(imagenHTML,j,'it'+row+column);
                                 col.appendChild(botonHTML);
                                 minirow.appendChild(col);
@@ -258,6 +292,14 @@ min.js"></script>
                             }
                             contener.appendChild(minirow);
                         }
+                        var imagenseleccionada = 0;
+                        var idimagenseleccionada;
+                        var iddivseleccionado;
+                        var imageneshalladas = [];
+                        var numerosseleccionado = 0;
+                        var igualclase;
+
+
                         for (var k = 0;k<=listaimagenes.length;k++){
                             $(".boton_imagen_"+k).each(function() {
                                 console.log("Entro boton"+j);
@@ -267,7 +309,64 @@ min.js"></script>
                                 console.log("ID del div dentro del botón: " + divId);
 
                                 $("#"+buttonId).click(function (){
-                                    $("#"+divId).toggle();
+                                    console.log($(this).attr("class"));
+                                    console.log(imageneshalladas);
+                                    var owo =$(this).attr("class");
+                                    if(imageneshalladas.includes(owo)){
+                                        console.log("AOSMDAOMD");
+                                    }else {
+                                        if(numerosseleccionado===0){
+                                            if (imagenseleccionada===0){
+                                                $("#"+divId).toggle();
+                                                imagenseleccionada=1;
+                                                idimagenseleccionada =buttonId;
+                                                iddivseleccionado = divId;
+                                                numerosseleccionado++;
+                                                igualclase = $(this).attr("class");
+                                                console.log(igualclase);
+                                            }
+                                        }
+                                        if(numerosseleccionado===1){
+                                            if(imagenseleccionada===1){
+                                                if(buttonId===idimagenseleccionada){
+
+                                                }else {
+                                                    $("#"+divId).toggle();
+                                                    var classe = $(this).attr("class");
+                                                    if(classe ===igualclase){
+                                                        console.log("SIUUUU");
+                                                        imagenseleccionada =0;
+                                                        idimagenseleccionada ="";
+                                                        iddivseleccionado = "";
+                                                        numerosseleccionado--;
+                                                        imageneshalladas.push($(this).attr("class"));
+                                                    }
+                                                    else {
+                                                        imagenseleccionada =0;
+
+                                                        setTimeout(() => {
+                                                            $("#"+divId).toggle();
+                                                            console.log(iddivseleccionado);
+                                                            $("#"+iddivseleccionado).toggle();
+                                                            numerosseleccionado--;
+                                                            idimagenseleccionada ="";
+                                                            iddivseleccionado = "";
+                                                        }, 2000);
+
+                                                    }
+                                                    //$("#"+divId).toggle();
+                                                    //$("#"+iddivseleccionado).toggle();
+                                                    //for (var p =0;p<=listaimagenes.length;p++){
+                                                    //  $(".boton_imagen_"+p).each(function() {
+                                                    //    var buttonIdvolt = $(this).attr("id");
+                                                    //  var divIdvolt = buttonIdvolt.replace("boton", "cuadro");
+                                                    //$("#" + divIdvolt).toggle();
+                                                    //})
+                                                    //}
+                                                }
+                                            }
+                                        }
+                                    }
                                 });
                             });
                         }
