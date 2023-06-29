@@ -29,7 +29,11 @@ min.js"></script>
     </div>
     <div class="row flex-box" id="imagenes"></div>
 
+
+    <h6 class="mt-5" style="font-weight: bold">Este es el tablero de Juego</h6>
     <div id="tablero">
+        <div class="row flex-box" id="tablero2"></div>
+
 
     </div>
     <div id="stargame"></div>
@@ -48,8 +52,8 @@ min.js"></script>
         let imagenasubir = document.getElementById('subir');
         let labeldelinput = $(".labfor");
         var divforlab = document.getElementById("divpalab");
-        var iiii = [];
-        const limite = 3;
+        const limite = 15;
+        var tablero = document.getElementById("tablero");
         imagenasubir.addEventListener('change',(event)=>{
             const file = event.target.files[0]
 
@@ -91,6 +95,7 @@ min.js"></script>
             creaDivmenor.appendChild(imagenpuesta);
             principal.appendChild(creaDivmenor);
 
+
             botonborrar.addEventListener('click',()=>{
                 alert(("BOTONN FUNCIONAAA"+botonborrar.id));
                $(creaDivmenor).remove();
@@ -105,6 +110,8 @@ min.js"></script>
                         $(divforlab).prepend('<label for="subir" class="btn mt-3 labfor" style="background-color: green; color: white">Agregar Imagenes</label>');
                     }
                 }
+                var listaimagenes = document.querySelectorAll("img.pokemonimagen");
+                console.log(listaimagenes);
             })
 
             if(numerodePokemones>=limite){
@@ -123,6 +130,8 @@ min.js"></script>
 
                 }
             }
+
+
 
         })
 
