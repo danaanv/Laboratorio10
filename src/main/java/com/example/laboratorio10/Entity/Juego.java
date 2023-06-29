@@ -11,21 +11,10 @@ import lombok.Setter;
 public class Juego {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "idjuego", nullable = false)
     private Integer id;
 
-    @Column(name = "imagen")
-    private byte[] imagen;
-
-    @Column(name = "contenttype")
-    private String contentType;
-
-    @Column(name = "nombre")
-    private String nombre;
-
-    @Column(name = "columnas")
-    private String columnas;
-
-    @Column(name = "filas")
-    private String filas;
+    @OneToOne
+    @JoinColumn(name = "orden_idorden")
+    private Orden ordenIdOrden;
 }
