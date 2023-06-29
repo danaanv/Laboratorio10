@@ -206,8 +206,7 @@ min.js"></script>
             var columnas;
             var filas;
             var tabien = 0;
-            var divfilas = $(".filas");
-            divfilas.innerHTML ="";
+            $('.filas').empty();
             for(var i=1;i<=cantidadDeFotos;i++){
                 var cociente = cantidadDeFotos/i;
                 if((Math.abs(cociente-i)===1) || (cociente===i)){
