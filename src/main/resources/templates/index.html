@@ -207,6 +207,7 @@ min.js"></script>
             var filas;
             var tabien = 0;
             var divfilas = $(".filas");
+            divfilas.innerHTML ="";
             for(var i=1;i<=cantidadDeFotos;i++){
                 var cociente = cantidadDeFotos/i;
                 if((Math.abs(cociente-i)===1) || (cociente===i)){
@@ -276,54 +277,63 @@ min.js"></script>
                                 console.log("ID del div dentro del botón: " + divId);
 
                                 $("#"+buttonId).click(function (){
-                                    if(numerosseleccionado===0){
-                                        if (imagenseleccionada===0){
-                                            $("#"+divId).toggle();
-                                            imagenseleccionada=1;
-                                            idimagenseleccionada =buttonId;
-                                            iddivseleccionado = divId;
-                                            numerosseleccionado++;
-                                            igualclase = $(this).attr("class");
-                                            console.log(igualclase);
-                                        }
-                                    }
-                                    if(numerosseleccionado===1){
-                                        if(imagenseleccionada===1){
-                                            if(buttonId===idimagenseleccionada){
-
-                                            }else {
+                                    console.log(imageneshalladas);
+                                    var owo =$(this).attr("class");
+                                    if(imageneshalladas.includes(owo)){
+                                        alert("AOSMDAOMD")
+                                    }else {
+                                        if(numerosseleccionado===0){
+                                            if (imagenseleccionada===0){
                                                 $("#"+divId).toggle();
-                                                var classe = $(this).attr("class");
-                                                if(classe ===igualclase){
-                                                    alert("SIUUUU")
-                                                    imagenseleccionada =0;
-                                                    idimagenseleccionada ="";
-                                                    iddivseleccionado = "";
-                                                    numerosseleccionado--;
-                                                }
-                                                else {
-                                                    imagenseleccionada =0;
-                                                    idimagenseleccionada ="";
-                                                    iddivseleccionado = "";
-                                                    setTimeout(() => {
-                                                        $("#"+divId).toggle();
-                                                        $("#"+iddivseleccionado).toggle();
+                                                imagenseleccionada=1;
+                                                idimagenseleccionada =buttonId;
+                                                iddivseleccionado = divId;
+                                                numerosseleccionado++;
+                                                igualclase = $(this).attr("class");
+                                                console.log(igualclase);
+                                            }
+                                        }
+                                        if(numerosseleccionado===1){
+                                            if(imagenseleccionada===1){
+                                                if(buttonId===idimagenseleccionada){
+
+                                                }else {
+                                                    $("#"+divId).toggle();
+                                                    var classe = $(this).attr("class");
+                                                    if(classe ===igualclase){
+                                                        console.log("SIUUUU");
+                                                        imagenseleccionada =0;
+                                                        idimagenseleccionada ="";
+                                                        iddivseleccionado = "";
                                                         numerosseleccionado--;
-                                                    }, 2000);
+                                                        imageneshalladas.push($(this).attr("class"));
+                                                    }
+                                                    else {
+                                                        imagenseleccionada =0;
+
+                                                        setTimeout(() => {
+                                                            $("#"+divId).toggle();
+                                                            console.log(iddivseleccionado);
+                                                            $("#"+iddivseleccionado).toggle();
+                                                            numerosseleccionado--;
+                                                            idimagenseleccionada ="";
+                                                            iddivseleccionado = "";
+                                                        }, 2000);
+
+                                                    }
+                                                    //$("#"+divId).toggle();
+                                                    //$("#"+iddivseleccionado).toggle();
+                                                    //for (var p =0;p<=listaimagenes.length;p++){
+                                                    //  $(".boton_imagen_"+p).each(function() {
+                                                    //    var buttonIdvolt = $(this).attr("id");
+                                                    //  var divIdvolt = buttonIdvolt.replace("boton", "cuadro");
+                                                    //$("#" + divIdvolt).toggle();
+                                                    //})
+                                                    //}
                                                 }
-                                                //$("#"+divId).toggle();
-                                                //$("#"+iddivseleccionado).toggle();
-                                                //for (var p =0;p<=listaimagenes.length;p++){
-                                                //  $(".boton_imagen_"+p).each(function() {
-                                                //    var buttonIdvolt = $(this).attr("id");
-                                                //  var divIdvolt = buttonIdvolt.replace("boton", "cuadro");
-                                                //$("#" + divIdvolt).toggle();
-                                                //})
-                                                //}
                                             }
                                         }
                                     }
-
                                 });
                             });
                         }
