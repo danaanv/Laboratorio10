@@ -28,20 +28,39 @@ min.js"></script>
         <input type="file" id="subir" accept="image/png" style="display: none">
     </div>
     <div class="row flex-box" id="imagenes"></div>
-
+    <div class="container" style="justify-content:center;justify-items: center;display: flex;">
+        <button type="button" class="btn btn-success" id="comenzar">Comenzar Juego</button>
+    </div>
 
     <h6 class="mt-5" style="font-weight: bold">Este es el tablero de Juego</h6>
-    <div id="tablero">
-        <div class="row flex-box" id="tablero2"></div>
+    <div id="tablero2">
+        <div class="flex-box" id="tablero22">
+
+            <div class="filas" style="display: flex;">
+
+            </div>
+        </div>
 
 
     </div>
-    <div id="stargame"></div>
+    <div id="stargame2"></div>
     <div id="Randomize">
 
     </div>
     <div id="Ayuda">
     </div>
+
+
+    <button type="button" class="btn btn-primary" style="padding: 0; margin: 5px;" id="botonprueba">
+        <div style="display: flex;">
+            <div style="position: relative; margin: 5px;">
+                <img src="/abra.png" style="height: 100px; width: 100px;">
+            </div>
+            <div style="height: 100px; width: 100px;margin: 5px; background: cornflowerblue; position: absolute;display: block" id="cuadroprueba"></div>
+        </div>
+    </button>
+
+
 </div>
 <script>
 
@@ -127,15 +146,124 @@ min.js"></script>
                 }
                 else {
                     divforlab.prepend('<label for="subir" class="btn mt-3 labfor" style="background-color: green; color: white">Agregar Imagenes</label>')
+                }
+            }
+        });
 
+        var botoncomenzar = document.getElementById("comenzar");
+        botoncomenzar.addEventListener('click',(event)=>{
+            var listaimagenes = document.querySelectorAll("img.pokemonimagen");
+            if(listaimagenes.length===0){
+                alert("No se ha subido ninguna imagen");
+            }else {
+                alert("La cantidad de imagenes subidas es: "+listaimagenes.length);
+            }
+            var cantidadDeFotos = listaimagenes.length;
+            alert("Cantidad de fotos: "+cantidadDeFotos);
+            var columnas;
+            var filas;
+            var divfilas = $(".filas");
+            for(var i=1;i<=cantidadDeFotos;i++){
+                var cociente = cantidadDeFotos/i;
+                if((Math.abs(cociente-i)===1) || (cociente===i)){
+                    if (i%2 === 1 ){
+                        columnas = i;
+                        filas = cociente;
+                    }else if (cociente%2 === 1){
+                        columnas = cociente;
+                        filas = i;
+                    }
+                    alert("columnas: "+columnas+", filas: "+filas);
+                    break;
+                }else if (i===cantidadDeFotos-1){
+                    alert("Else if: columnas: "+columnas+", filas: "+filas);
+                    columnas=0;
+                    filas=0;
+                    break;
                 }
             }
 
-
-
         })
 
-    })
+
+
+
+        $("#pruebad").click(function (){
+            var cantidadDeFotos = $("#cantidadDeFotos").val();
+            var columnas;
+            var filas;
+            var divfilas = $(".filas");
+
+            for(var i=1;i<=cantidadDeFotos;i++){
+                var cociente = cantidadDeFotos/i;
+                if((Math.abs(cociente-i)===1) || (cociente===i)){
+                    if (i%2 === 1 ){
+                        columnas = i;
+                        filas = cociente;
+                    }else if (cociente%2 === 1){
+                        columnas = cociente;
+                        filas = i;
+                    }
+                    $("#stargame").css('display','block');
+                    break;
+                }else if (i===cantidadDeFotos-1){
+                    columnas=0;
+                    filas=0;
+                    break;
+                }
+            }
+        });
+
+        var imagenes = [
+            "static/Abra.png",
+            "static/Aerodactyl.png",
+            "static/arbok.png",
+            "static/Arcanine.png",
+            "static/Beedrill.png",
+            "static/Charizard.png"
+        ];
+
+        var cantidadElementos = imagenes.length;
+
+        // Función para generar el código HTML de cada imagen
+        function generarHTMLImagen(ruta) {
+            return '<img src="' + ruta + '" style="height: 100px; width: 100px;">';
+        }
+
+        function generarBoton(imagenHTML,index,iterador){
+            return '<button type="button" class="btn btn-primary boton_imagen_' + index + '"  id="imagen_' + index + 'boton_' + iterador + '" style="padding: 0; margin: 5px;">\n' +
+                '    <div style="display: flex;">\n' +
+                '      <div style="position: relative; margin: 5px;">\n' +
+                imagenHTML +
+                '      </div>\n' +
+                '      <div style="height: 100px; width: 100px;margin: 5px; background: cornflowerblue; position: absolute;display: block" ' +
+                'id="imagen_' + index + 'cuadro_' + iterador + '"></div>\n' +
+                '    </div>\n' +
+                '  </button>';
+        }
+
+        // Recorrer el array de imágenes y agregar los elementos al contenedor deseado
+        var $contenedor = $(".filas"); // Reemplaza ".filas" con el selector de tu contenedor
+        $.each(imagenes, function(index, imagen) {
+            for(var iterador=0;iterador<2;iterador++){
+                var imagenHTML = generarHTMLImagen(imagen);
+                var botonHTML = generarBoton(imagenHTML,index,iterador);
+                $contenedor.append(botonHTML);
+
+                $(".boton_imagen_"+index).each(function() {
+                    var buttonId = $(this).attr("id");
+                    var divId = buttonId.replace("boton", "cuadro");
+
+                    console.log("ID del botón: " + buttonId);
+                    console.log("ID del div dentro del botón: " + divId);
+
+                    $("#"+buttonId).click(function (){
+                        $("#"+divId).toggle();
+                    });
+                });
+            }
+        });
+    });
 
 
 </script>
