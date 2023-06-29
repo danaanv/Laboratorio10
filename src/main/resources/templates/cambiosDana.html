@@ -46,17 +46,17 @@
   <input id="cantidadDeFotos" name="personajes">
   <button type="button" id="prueba" class="btn btn-success">Probar</button>
 
-  <button type="button" class="btn btn-primary" style="padding: 0; margin: 5px;">
+  <button type="button" class="btn btn-primary" style="padding: 0; margin: 5px;" id="botonprueba">
     <div style="display: flex;">
       <div style="position: relative; margin: 5px;">
-        <img th:src="@{/abra.png}" style="height: 100px; width: 100px;">
+        <img src="/abra.png" style="height: 100px; width: 100px;">
       </div>
-      <div style="height: 100px; width: 100px;margin: 5px; background: cornflowerblue; position: absolute" ></div>
+      <div style="height: 100px; width: 100px;margin: 5px; background: cornflowerblue; position: absolute;display: block" id="cuadroprueba"></div>
     </div>
   </button>
 
 
-  <div id="holaaa">
+  <div class="filas">
 
   </div>
 
@@ -91,6 +91,7 @@
         }
       }
 
+      /*
       var contador  = 0;
       for (var k=0;k<columnas;k++){
         $("#columnas").append('<div class="filas" style="display: flex;flex-direction: column;">\n' +
@@ -101,26 +102,81 @@
       for (var j=0;j<filas;j++){
         contador += 1;
         $(".filas").append('' +
-                '<button type="button" class="btn btn-primary" id="div' + contador + '" style="padding: 0; margin: 5px;">\n' +
+                '<button type="button" class="btn btn-primary botonprueba" style="padding: 0; margin: 5px;">\n' +
                 '        <div style="display: flex;">\n' +
                 '            <div style="position: relative; margin: 5px;">\n' +
                 '                <img src="/abra.png" style="height: 100px; width: 100px;">\n' +
                 '            </div>\n' +
                 '            <div style="height: 100px; width: 100px;margin: 5px; background: cornflowerblue; position: absolute;display: block" ' +
-                'id="cuadrito' + contador + '"></div>\n' +
+                'class="cuadroprueba"></div>\n' +
                 '        </div>\n' +
                 '    </button>' +
                 '');
       }
 
-      for (var o=0;o<cantidadDeFotos;o++){
-        $("#div"+o).click(function (){
-          $("#cuadrito"+o).css('display',"none");
+      $(".botonprueba").click(function (){
+        $(".cuadroprueba").toggle();
+      });
+      */
+
+    });
+
+    var imagenes = [
+      "/abra.png",
+      "/aerodactyl.png",
+      "/arbok.png",
+      "/arcanine.png",
+      "/beedrill.png",
+      "/charizard.png"
+    ];
+
+    var cantidadElementos = imagenes.length;
+
+    // Función para generar el código HTML de cada imagen
+    function generarHTMLImagen(ruta) {
+      return '<img src="' + ruta + '" style="height: 100px; width: 100px;">';
+    }
+
+    function generarBoton(imagenHTML,index,iterador){
+      return '<button type="button" class="btn btn-primary boton_imagen_' + index + '"  id="imagen_' + index + 'boton_' + iterador + '" style="padding: 0; margin: 5px;">\n' +
+              '    <div style="display: flex;">\n' +
+              '      <div style="position: relative; margin: 5px;">\n' +
+              imagenHTML +
+              '      </div>\n' +
+              '      <div style="height: 100px; width: 100px;margin: 5px; background: cornflowerblue; position: absolute;display: block" ' +
+              'id="imagen_' + index + 'cuadro_' + iterador + '"></div>\n' +
+              '    </div>\n' +
+              '  </button>';
+    }
+
+    // Recorrer el array de imágenes y agregar los elementos al contenedor deseado
+    var $contenedor = $(".filas"); // Reemplaza ".filas" con el selector de tu contenedor
+    $.each(imagenes, function(index, imagen) {
+      for(var iterador=0;iterador<2;iterador++){
+        var imagenHTML = generarHTMLImagen(imagen);
+        var botonHTML = generarBoton(imagenHTML,index,iterador);
+        $contenedor.append(botonHTML);
+
+        $(".boton_imagen_"+index).each(function() {
+          var buttonId = $(this).attr("id");
+          var divId = buttonId.replace("boton", "cuadro");
+
+          console.log("ID del botón: " + buttonId);
+          console.log("ID del div dentro del botón: " + divId);
+
+          $("#"+buttonId).click(function (){
+            $("#"+divId).toggle();
+          });
+
+
+
         });
 
+        /*
+        $("#"+id).click(function (){
+          $("#imagen_"+index+"cuadro"+iterador).toggle();
+        });*/
       }
-
-
     });
   });
 
