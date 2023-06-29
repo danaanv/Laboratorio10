@@ -56,6 +56,17 @@ min.js"></script>
 <script>
 
     $(document).ready(function (){
+
+        function numeroAleatorio(max, lista){
+
+            if(lista.includes(numero)){
+                function
+            }
+        }
+
+        function getRandomInt(max){
+            return Math.floor(Math.random()*max);
+        }
         // Función para generar el código HTML de cada imagen
         function generarHTMLImagen(ruta) {
             return '<img src="' + ruta + '" style="height: 100px; width: 100px;">';
@@ -234,6 +245,7 @@ min.js"></script>
                 // Recorrer el array de imágenes y agregar los elementos al contenedor deseado
                 var contener = document.querySelector(".filas"); // Reemplaza ".filas" con el selector de tu contenedor
                 console.log("Columnas: "+ columnas+ ", Filas: ",filas );
+                var imagenespuestas = [];
                 //$.each(listaimagenes, function(index, imagen) {
                     //for(var iterador=0;iterador<2;iterador++){
                         for (var row=1; row<=filas;row++){
@@ -250,6 +262,15 @@ min.js"></script>
                                     j =j-listaimagenes.length;
 
                                 }
+                                var numeroaleatorio = getRandomInt(cantidadDeFotos);
+                                console.log(numeroaleatorio);
+                                imagenespuestas.push(numeroaleatorio);
+                                if(imagenespuestas.includes(numeroaleatorio)){
+
+                                }else {
+
+                                }
+                                j = numeroaleatorio;
                                 console.log("J: "+j);
                                 var imagenHTML = generarHTMLImagen2(listaimagenes[j].src);
                                 var botonHTML = generarBoton2(imagenHTML,j,'it'+row+column);
@@ -276,10 +297,11 @@ min.js"></script>
                                 console.log("ID del div dentro del botón: " + divId);
 
                                 $("#"+buttonId).click(function (){
+                                    console.log($(this).attr("class"));
                                     console.log(imageneshalladas);
                                     var owo =$(this).attr("class");
                                     if(imageneshalladas.includes(owo)){
-                                        alert("AOSMDAOMD")
+                                        console.log("AOSMDAOMD");
                                     }else {
                                         if(numerosseleccionado===0){
                                             if (imagenseleccionada===0){
