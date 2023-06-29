@@ -45,7 +45,7 @@ min.js"></script>
         var contadortotalimagenes = 0;
         let principal = document.getElementById('imagenes');
         let imagenasubir = document.getElementById('subir');
-        let labeldelinput = $(".labfor");
+        let labeldelinput = document.getElementsByClassName("labfor");
         imagenasubir.addEventListener('change',(event)=>{
             const file = event.target.files[0]
 
@@ -95,14 +95,12 @@ min.js"></script>
                 contadorhtml.textContent ="Total de imágenes seleccionadas: "+numerodePokemones;
             })
 
-            if(numerodePokemones===15){
-                imagenasubir.hidden =true;
-                labeldelinput.hidden = true;
+            if(numerodePokemones===2){
+                imagenasubir.hidden = true;
+                labeldelinput.
                 alert("Se ha excedido el nombre de imagen");
             }
             else{
-                imagenasubir.hidden = false;
-                labeldelinput.hidden = false;
             }
 
         })
