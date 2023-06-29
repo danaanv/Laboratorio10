@@ -272,7 +272,7 @@ min.js"></script>
                                 col.classList.add("col-md-4","mt-3");
                                 console.log("index"+index);
                                 //console.log(listaimagenes[index-1]);
-                                //var j = index-1;
+                                var j = index-1;
                                 if (j>=listaimagenes.length){
                                     j =j-listaimagenes.length;
 
@@ -284,10 +284,11 @@ min.js"></script>
                                 var numerorandom = numeroAleatorio(listaimagenes.length, imagenespuestas);
                                 imagenespuestas.push(numerorandom);
                                 console.log("Numero pa imagen"+numerorandom);
-                                var j = numerorandom;
+                                //var j = numerorandom;
                                 console.log("J: "+j);
-                                console.log(numeroimagen);
-                                var imagenHTML = generarHTMLImagen2(listaimagenes[numeroimagen].src);
+                                //console.log(numeroimagen);
+                                var imagenHTML = generarHTMLImagen2(listaimagenes[j].src);
+                                //var imagenHTML = generarHTMLImagen2(listaimagenes[numeroimagen].src);
                                 var botonHTML = generarBoton2(imagenHTML,j,'it'+row+column);
                                 col.appendChild(botonHTML);
                                 minirow.appendChild(col);
