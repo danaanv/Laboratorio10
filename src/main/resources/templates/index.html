@@ -198,7 +198,7 @@ min.js"></script>
             if(listaimagenes.length===0){
                 alert("No se ha subido ninguna imagen");
             }else {
-                alert("La cantidad de imagenes subidas es: "+listaimagenes.length);
+                //alert("La cantidad de imagenes subidas es: "+listaimagenes.length);
             }
             var cantidadDeFotos = 2*(listaimagenes.length);
             //alert("Cantidad de fotos: "+cantidadDeFotos);
@@ -258,6 +258,14 @@ min.js"></script>
                             }
                             contener.appendChild(minirow);
                         }
+                        var imagenseleccionada = 0;
+                        var idimagenseleccionada;
+                        var iddivseleccionado;
+                        var imageneshalladas = [];
+                        var numerosseleccionado = 0;
+                        var igualclase;
+
+
                         for (var k = 0;k<=listaimagenes.length;k++){
                             $(".boton_imagen_"+k).each(function() {
                                 console.log("Entro boton"+j);
@@ -267,7 +275,54 @@ min.js"></script>
                                 console.log("ID del div dentro del botón: " + divId);
 
                                 $("#"+buttonId).click(function (){
-                                    $("#"+divId).toggle();
+                                    if(numerosseleccionado===0){
+                                        if (imagenseleccionada===0){
+                                            $("#"+divId).toggle();
+                                            imagenseleccionada=1;
+                                            idimagenseleccionada =buttonId;
+                                            iddivseleccionado = divId;
+                                            numerosseleccionado++;
+                                            igualclase = $(this).attr("class");
+                                            console.log(igualclase);
+                                        }
+                                    }
+                                    if(numerosseleccionado===1){
+                                        if(imagenseleccionada===1){
+                                            if(buttonId===idimagenseleccionada){
+
+                                            }else {
+                                                $("#"+divId).toggle();
+                                                var classe = $(this).attr("class");
+                                                if(classe ===igualclase){
+                                                    alert("SIUUUU")
+                                                    imagenseleccionada =0;
+                                                    idimagenseleccionada ="";
+                                                    iddivseleccionado = "";
+                                                    numerosseleccionado--;
+                                                }
+                                                else {
+                                                    imagenseleccionada =0;
+                                                    idimagenseleccionada ="";
+                                                    iddivseleccionado = "";
+                                                    setTimeout(() => {
+                                                        $("#"+divId).toggle();
+                                                        $("#"+iddivseleccionado).toggle();
+                                                        numerosseleccionado--;
+                                                    }, 2000);
+                                                }
+                                                //$("#"+divId).toggle();
+                                                //$("#"+iddivseleccionado).toggle();
+                                                //for (var p =0;p<=listaimagenes.length;p++){
+                                                //  $(".boton_imagen_"+p).each(function() {
+                                                //    var buttonIdvolt = $(this).attr("id");
+                                                //  var divIdvolt = buttonIdvolt.replace("boton", "cuadro");
+                                                //$("#" + divIdvolt).toggle();
+                                                //})
+                                                //}
+                                            }
+                                        }
+                                    }
+
                                 });
                             });
                         }
