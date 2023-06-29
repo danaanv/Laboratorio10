@@ -57,14 +57,23 @@ min.js"></script>
 
     $(document).ready(function (){
 
+        var numerosalio;
+        var numeroimagen;
         function numeroAleatorio(max, lista){
             var numeroaleatorio = getRandomInt(max);
-            if(lista.includes(numeroaleatorio)){
-                numeroAleatorio(numeroaleatorio,lista);
+            if (numeroaleatorio===numerosalio){
+                numeroAleatorio(max,lista);
             }else {
-                return numeroaleatorio;
+                numerosalio = numeroaleatorio;
+                if(lista.includes(numeroaleatorio)){
+                    numeroAleatorio(numeroaleatorio,lista);
+                }else {
+                    console.log("NUMERROOO ALEATORIOO: "+numeroaleatorio);
+                    console.log("NUMEROOO SALIO: "+numerosalio);
+                    numeroimagen = numeroaleatorio;
+                    return numeroaleatorio;
+                }
             }
-
         }
 
         function getRandomInt(max){
@@ -260,16 +269,22 @@ min.js"></script>
                                 col.classList.add("col-md-4","mt-3");
                                 console.log("index"+index);
                                 //console.log(listaimagenes[index-1]);
-                                var j = index-1;
+                                //var j = index-1;
                                 if (j>=listaimagenes.length){
                                     j =j-listaimagenes.length;
 
                                 }
-                                var numerorandom = numeroAleatorio(max, lista);
+                                if(imagenespuestas.length===listaimagenes.length){
+                                    imagenespuestas=[];
+                                    console.log("Array"+imagenespuestas);
+                                }
+                                var numerorandom = numeroAleatorio(listaimagenes.length, imagenespuestas);
                                 imagenespuestas.push(numerorandom);
-                                j = numerorandom;
+                                console.log("Numero pa imagen"+numerorandom);
+                                var j = numerorandom;
                                 console.log("J: "+j);
-                                var imagenHTML = generarHTMLImagen2(listaimagenes[j].src);
+                                console.log(numeroimagen);
+                                var imagenHTML = generarHTMLImagen2(listaimagenes[numeroimagen].src);
                                 var botonHTML = generarBoton2(imagenHTML,j,'it'+row+column);
                                 col.appendChild(botonHTML);
                                 minirow.appendChild(col);
