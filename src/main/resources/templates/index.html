@@ -48,7 +48,8 @@ min.js"></script>
     <div id="Randomize">
 
     </div>
-    <div id="Ayuda">
+    <div id="aa">
+        <button type="button" id="ayuda" class="btn btn-success">Ayuda</button>
     </div>
 
 
@@ -56,6 +57,8 @@ min.js"></script>
 <script>
 
     $(document).ready(function (){
+
+
 
         var numerosalio;
         var numeroimagen;
@@ -288,6 +291,30 @@ min.js"></script>
                                 var botonHTML = generarBoton2(imagenHTML,j,'it'+row+column);
                                 col.appendChild(botonHTML);
                                 minirow.appendChild(col);
+                                $("#ayuda").click(function (){
+                                    console.log("");
+                                    console.log("DANA");
+                                    console.log("");
+                                    for (var primero=0;primero<cantidadDeFotos;primero++){
+                                        for (var segundo=0;segundo<2;segundo++){
+                                            var nombreDiv = "imagen_"+ primero + "cuadro_it" + segundo;
+                                            console.log(nombreDiv);
+                                            var isVisible = $("#"+nombreDiv).is(":visible");
+                                            console.log(isVisible);
+                                            var nombreDiv2;
+                                            if (!isVisible){
+                                                console.log("Entre al IF");
+                                                if (segundo===0){
+                                                    nombreDiv2 = "imagen_"+ primero + "cuadro_" + 'it'+row+column;
+                                                } else if (segundo === 1){
+                                                    nombreDiv2 = "imagen_"+ primero + "cuadro_" + 'it'+row+column;
+                                                }
+                                                $("#" + nombreDiv).toggle(false);
+                                                $("#" + nombreDiv2).toggle(false);
+                                            }
+                                        }
+                                    }
+                                });
 
                             }
                             contener.appendChild(minirow);
